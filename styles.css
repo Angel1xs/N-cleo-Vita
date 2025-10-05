@@ -1,0 +1,245 @@
+/*
+ * Archivo: styles.css
+ * Descripción: Estilos para los componentes principales del juego.
+ */
+
+/* ==================================== */
+/* === PANTALLAS DE INTRO Y CONTEXTO === */
+/* ==================================== */
+
+/* Estilo Base para pantallas completas (Intro y Contexto) */
+.full-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+  z-index: 10;
+}
+
+#intro-screen {
+  background: radial-gradient(circle at top, #4db8ff 0%, #00334d 100%);
+}
+
+/* Aseguramos que la regla display: flex; sea anulada cuando se añade la clase hidden */
+#intro-screen.hidden,
+#context-screen.hidden { 
+    display: none; 
+}
+
+#intro-screen h1 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+#intro-screen p {
+  max-width: 500px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+#context-screen {
+  background: radial-gradient(circle at top, #00334d 0%, #000 100%);
+}
+
+#context-screen h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+#context-screen p {
+  max-width: 600px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+
+/* =========================== */
+/* === CONTENIDO PRINCIPAL === */
+/* =========================== */
+
+#game {
+  max-width: 820px;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.03);
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+  transition: all 0.6s ease;
+}
+
+#year {
+  font-size: 1.25rem;
+  margin-bottom: 8px;
+  color: var(--accent-primary);
+}
+
+#context, #warning {
+  margin: 8px 0;
+  line-height: 1.45;
+  color: var(--text-light);
+}
+
+#warning { 
+  color: #ffddcc;
+}
+
+/* ================== */
+/* === PLANETA / SCORE === */
+/* ================== */
+
+#planet-container {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  margin: 8px 0 24px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  /* Estilo base, será sobrescrito por .day o .night */
+  background: linear-gradient(180deg, rgba(0,20,40,0.4), rgba(0,0,0,0.6));
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+/* Modos Día/Noche */
+#planet-container.day {
+  background: radial-gradient(circle at top, #4db8ff 0%, #00334d 60%);
+  transition: background 0.8s ease-in-out, filter 0.8s ease-in-out;
+}
+
+#planet-container.night {
+  background: radial-gradient(circle at top, #00111f 0%, #000000 60%);
+  transition: background 0.8s ease-in-out, filter 0.8s ease-in-out;
+  filter: brightness(0.78);
+}
+
+#earthCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: transparent;
+}
+
+#score {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  background: rgba(0,0,0,0.5);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  border: 1px solid rgba(0,170,255,0.12);
+  transition: all 0.6s ease;
+}
+
+/* ==================== */
+/* === BARRA DE VIDA === */
+/* ==================== */
+
+#health-bar-container {
+    width: 90%;
+    max-width: 400px;
+    height: 25px;
+    background-color: #333;
+    border: 2px solid #555;
+    border-radius: 15px;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+#health-bar-fill {
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+/* Colores */
+.health-green { background-color: var(--health-green); }
+.health-light-green { background-color: var(--health-light-green); }
+.health-yellow { background-color: var(--health-yellow); }
+.health-orange { background-color: var(--health-orange); }
+.health-red { background-color: var(--health-red); }
+
+
+/* ====================== */
+/* === OPCIONES / UI === */
+/* ====================== */
+
+#choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.choice {
+  background: var(--text-muted);
+  border: 1px solid rgba(0,170,255,0.12);
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .12s ease, background .12s ease;
+  text-align: left;
+}
+
+.choice:hover { 
+  transform: translateY(-3px); 
+  background: rgba(0,170,255,0.08); 
+}
+
+.choice.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.choice.selected {
+  outline: 2px solid rgba(0,200,120,0.18);
+  background: rgba(0,200,120,0.06);
+}
+
+button {
+  background: var(--accent-primary);
+  border: none;
+  padding: 10px 18px;
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 6px;
+  transition: background 0.3s;
+}
+
+/* Estilo para botón de inicio en pantalla de intro */
+#intro-screen button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 18px;
+    background-color: #4CAF50;
+}
+
+#intro-screen button:hover {
+    background-color: #45a049;
+}
+
+button:hover { 
+  background: #008cc9;
+}
+
+button.hidden { 
+  display: none; 
+}
+
+#final {
+  font-size: 1.1rem;
+  color: #8cd9ff;
+  margin-top: 18px;
+  padding: 10px;
+  border-radius: 8px;
+}
