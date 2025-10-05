@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Futuro de la Tierra</title>
+    
+    <link rel="stylesheet" href="vars.css" />
+    <link rel="stylesheet" href="styles.css" />
+    
+</head>
+<body>
+
+    <div id="intro-screen" class="full-screen-overlay">
+      <h1>Futuro de la Tierra</h1>
+      <p>Bienvenido a la simulación. Tus decisiones afectarán el futuro del planeta.<br>
+      Presiona ENTER para continuar.</p>
+      <button id="startButton">Comenzar Simulación</button>
+    </div>
+
+    <div id="context-screen" class="full-screen-overlay hidden">
+      <h2>Contexto del Juego</h2>
+      <p>
+        El mundo enfrenta desafíos sin precedentes: cambio climático, pérdida de biodiversidad, escasez de agua y energía.
+        Tus decisiones influirán directamente en la salud del planeta y la supervivencia de millones.
+      </p>
+      <p>(Presiona ENTER para comenzar a jugar)</p>
+    </div>
+
+    <div class="container hidden" id="main-content">
+      <h1>Futuro de la Tierra</h1>
+
+      <div id="planet-container">
+        <canvas id="earthCanvas"></canvas>
+        <div id="score">Puntaje del Planeta: <span id="planetScore">100</span></div>
+      </div>
+
+      <div id="health-bar-container">
+        <div id="health-bar-fill" class="health-green"></div>
+      </div>
+
+      <div id="game">
+        <div id="year"></div>
+        <p id="context"></p>
+        <p id="warning"></p>
+        <div id="choices"></div>
+        <button id="next" class="hidden">Siguiente Año</button>
+        <div id="final" class="hidden"></div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+      /**
+       * Módulo de control de inicio de fases (Intro -> Contexto -> Juego)
+       */
+      window.addEventListener("DOMContentLoaded", () => {
+        // Referencias a las pantallas
+        const intro = document.getElementById("intro-screen");
+        const contextScreen = document.getElementById("context-screen");
+        const mainContent = document.getElementById("main-content");
+        const startButton = document.getElementById("startButton");
+
+        /**
+         * Inicia el juego principal, llama a las funciones de inicialización
+         * del script.js y quita los listeners de inicio.
+         */
+        function startGame() {
+          mainContent.classList.remove("hidden");
+          
+          // Llama a la función de inicialización del juego 
+          if (typeof init === "function") init();
+          
+          // Quitar listeners una vez que el juego inicia
+          window.removeEventListener("keydown", handleEnter);
+          startButton.removeEventListener("click", advancePhase);
+        }
+
+        /**
+         * Avanza la simulación a la siguiente fase (Intro -> Contexto o Contexto -> Juego).
+         */
+        function advancePhase() {
+            if (!intro.classList.contains("hidden")) {
+                // FASE 1: Oculta intro y muestra contexto
+                intro.classList.add("hidden");
+                contextScreen.classList.remove("hidden");
+            } else if (!contextScreen.classList.contains("hidden")) {
+                // FASE 2: Oculta contexto y muestra juego
+                contextScreen.classList.add("hidden");
+                startGame();
+            }
+        }
+
+        /**
+         * Maneja el evento de presionar la tecla Enter.
+         * @param {KeyboardEvent} event 
+         */
+        function handleEnter(event) {
+          if (event.key === "Enter") {
+            advancePhase();
+          }
+        }
+        
+        // Asignar listeners
+        window.addEventListener("keydown", handleEnter);
+        startButton.addEventListener("click", advancePhase);
+      });
+    </script>
+
+</body>
+</html>
