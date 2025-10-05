@@ -1,0 +1,53 @@
+/*
+ * Archivo: vars.css
+ * Descripción: Define variables de color y tipografía base.
+ */
+
+:root {
+  /* Variables de Color */
+  --bg-dark: #000;
+  --bg-light: #00111f;
+  --accent-primary: #00b3ff;
+  --text-light: #e6f7ff;
+  --text-muted: rgba(255, 255, 255, 0.08);
+
+  /* Colores de Alerta/Puntaje */
+  --health-green: #4CAF50;
+  --health-light-green: #8BC34A;
+  --health-yellow: #FFEB3B;
+  --health-orange: #FF9800;
+  --health-red: #F44336;
+}
+
+/* Base global */
+* { 
+  box-sizing: border-box; 
+}
+
+body {
+  background: radial-gradient(circle at top, var(--bg-light), var(--bg-dark));
+  color: var(--text-light);
+  font-family: 'Poppins', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin: 0 0 12px 0;
+  color: #8cd9ff;
+}
+
+/* Clases de utilidad */
+.hidden { 
+  display: none; 
+}
+
+.container {
+  max-width: 1000px;
+  margin: 18px auto;
+  padding: 18px;
+  text-align: center;
+}
