@@ -1,17 +1,17 @@
 /*
- * Archivo: vars.css
- * Descripción: Define variables de color y tipografía base.
+ * File: vars.css
+ * Description: Defines color variables and base typography.
  */
 
 :root {
-  /* Variables de Color */
+  /* Color Variables */
   --bg-dark: #000;
   --bg-light: #00111f;
   --accent-primary: #00b3ff;
   --text-light: #e6f7ff;
   --text-muted: rgba(255, 255, 255, 0.08);
 
-  /* Colores de Alerta/Puntaje */
+  /* Alert/Score Colors */
   --health-green: #4CAF50;
   --health-light-green: #8BC34A;
   --health-yellow: #FFEB3B;
@@ -40,7 +40,7 @@ h1 {
   color: #8cd9ff;
 }
 
-/* Clases de utilidad */
+/* Utility Classes */
 .hidden { 
   display: none; 
 }
