@@ -1,141 +1,141 @@
 // ===========================================
-// script.js - Lógica Principal del Juego
+// script.js - Main Game Logic
 // ===========================================
 
 /**
- * Función principal de inicialización del juego.
- * Se llama cuando el contenido principal se muestra (después de las pantallas de inicio).
+ * Main initialization function for the game.
+ * Called when the main game content is displayed (after the splash screens).
  */
 function init() {
   // ---------------------------
-  // 1. Datos del juego (eventos)
+  // 1. Game Data (Events)
   // ---------------------------
   const events = [
     {
       year: 2025,
-      context: "Un derrame en el Golfo de México afecta fauna y comunidades costeras.",
-      warning: "El impacto podría durar décadas si no se actúa con rapidez.",
+      context: "An oil spill in the Gulf of Mexico affects fauna and coastal communities.",
+      warning: "The impact could last decades without swift action.",
       options: [
-        { text: "Ordenar limpieza inmediata, aunque sin un plan de largo plazo.", effect: +1 },
-        { text: "Priorizar compensaciones económicas antes que restaurar el ecosistema.", effect: -1 },
-        { text: "Suspender temporalmente toda actividad petrolera en la zona.", effect: +2 },
-        { text: "Dejar que las empresas privadas gestionen el desastre con incentivos.", effect: -2 }
+        { text: "Order immediate cleanup, even without a long-term plan.", effect: +1 },
+        { text: "Prioritize financial compensation over ecosystem restoration.", effect: -1 },
+        { text: "Temporarily suspend all oil activity in the area.", effect: +2 },
+        { text: "Let private companies manage the disaster with incentives.", effect: -2 }
       ]
     },
     {
       year: 2026,
-      context: "Europa enfrenta temperaturas superiores a 50 grados C y apagones.",
-      warning: "Si no se rediseñan las ciudades, el sistema colapsará.",
+      context: "Europe faces temperatures over 50 degrees C and power outages.",
+      warning: "If cities aren't redesigned, the system will collapse.",
       options: [
-        { text: "Promover el teletrabajo.", effect: +1 },
-        { text: "Usar aire acondicionado con energía renovable.", effect: 0 },
-        { text: "Plantar bosques urbanos.", effect: +2 },
-        { text: "Invertir solo en infraestructura climática para grandes ciudades.", effect: -1 }
+        { text: "Promote telecommuting.", effect: +1 },
+        { text: "Use renewable energy for air conditioning.", effect: 0 },
+        { text: "Plant urban forests.", effect: +2 },
+        { text: "Invest only in climate infrastructure for large cities.", effect: -1 }
       ]
     },
     {
       year: 2027,
-      context: "La escasez de agua se agrava por sobreexplotación y contaminación.",
-      warning: "Millones podrían quedar sin acceso al agua potable antes de 2030.",
+      context: "Water scarcity worsens due to over-exploitation and contamination.",
+      warning: "Millions could lose access to drinking water before 2030.",
       options: [
-        { text: "Construir plantas desalinizadoras.", effect: +1 },
-        { text: "Lanzar campañas sin restricciones.", effect: 0 },
-        { text: "Subvencionar agua para industrias.", effect: -1 },
-        { text: "Implementar racionamiento priorizando el consumo humano.", effect: +2 }
+        { text: "Build desalination plants.", effect: +1 },
+        { text: "Launch campaigns without restrictions.", effect: 0 },
+        { text: "Subsidize water for industries.", effect: -1 },
+        { text: "Implement rationing, prioritizing human consumption.", effect: +2 }
       ]
     },
     {
       year: 2028,
-      context: "Niebla tóxica cubre ciudades por semanas.",
-      warning: "La contaminación podría causar enfermedades irreversibles.",
+      context: "Toxic smog covers cities for weeks.",
+      warning: "Contamination could cause irreversible diseases.",
       options: [
-        { text: "Cerrar fábricas temporalmente.", effect: +2 },
-        { text: "Instalar filtros en zonas urbanas.", effect: +1 },
-        { text: "Trasladar industrias a zonas rurales.", effect: -1 },
-        { text: "Aumentar producción industrial y prometer medidas futuras.", effect: -2 }
+        { text: "Temporarily close factories.", effect: +2 },
+        { text: "Install filters in urban areas.", effect: +1 },
+        { text: "Move industries to rural zones.", effect: -1 },
+        { text: "Increase industrial production and promise future measures.", effect: -2 }
       ]
     },
     {
       year: 2029,
-      context: "La Amazonía está al borde del colapso ecológico.",
-      warning: "Si se transforma en sabana, el clima mundial perderá su principal regulador.",
+      context: "The Amazon is on the verge of ecological collapse.",
+      warning: "If it turns into savanna, the global climate loses its main regulator.",
       options: [
-        { text: "Prohibir toda tala.", effect: +2 },
-        { text: "Tala sostenible con monitoreo.", effect: +1 },
-        { text: "Proyectos agrícolas en zonas deforestadas.", effect: 0 },
-        { text: "Promover turismo ecológico masivo.", effect: -1 }
+        { text: "Prohibit all logging.", effect: +2 },
+        { text: "Sustainable logging with monitoring.", effect: +1 },
+        { text: "Agricultural projects in deforested areas.", effect: 0 },
+        { text: "Promote massive eco-tourism.", effect: -1 }
       ]
     },
     {
       year: 2030,
-      context: "África sufre desertificación masiva y pérdida de suelos agrícolas.",
-      warning: "La migración climática podría aumentar exponencialmente.",
+      context: "Africa suffers massive desertification and loss of agricultural land.",
+      warning: "Climate migration could increase exponentially.",
       options: [
-        { text: "Proyectos agrícolas tecnológicos.", effect: +1 },
-        { text: "Combinar técnicas tradicionales y modernas.", effect: +2 },
-        { text: "Incentivar migración hacia zonas fértiles.", effect: -1 },
-        { text: "Crear reservas naturales prohibiendo el uso humano.", effect: 0 }
+        { text: "Technological agricultural projects.", effect: +1 },
+        { text: "Combine traditional and modern techniques.", effect: +2 },
+        { text: "Incentivize migration to fertile areas.", effect: -1 },
+        { text: "Create nature reserves prohibiting human use.", effect: 0 }
       ]
     },
     {
       year: 2031,
-      context: "El 70 porciento de los arrecifes del Pacífico se blanquean por el calentamiento global.",
-      warning: "La pérdida del coral afectará ecosistemas y comunidades costeras enteras.",
+      context: "70 percent of Pacific reefs are bleaching due to global warming.",
+      warning: "Coral loss will affect entire ecosystems and coastal communities.",
       options: [
-        { text: "Establecer áreas de exclusión total de pesca.", effect: +2 },
-        { text: "Financiar investigación en corales resistentes al calor.", effect: +1 },
-        { text: "Impulsar turismo ecológico controlado.", effect: 0 },
-        { text: "Permitir pesca regulada mientras se restaura el coral.", effect: -1 }
+        { text: "Establish total exclusion zones for fishing.", effect: +2 },
+        { text: "Fund research on heat-resistant corals.", effect: +1 },
+        { text: "Promote controlled eco-tourism.", effect: 0 },
+        { text: "Allow regulated fishing while coral restoration is planned.", effect: -1 }
       ]
     },
     {
       year: 2032,
-      context: "Crisis energética en Medio Oriente por caída en la demanda petrolera.",
-      warning: "Sin diversificación, podría haber colapsos financieros y sociales.",
+      context: "Energy crisis in the Middle East due to falling oil demand.",
+      warning: "Without diversification, financial and social collapse could occur.",
       options: [
-        { text: "Invertir en energía solar con recortes en otros sectores.", effect: +2 },
-        { text: "Ofrecer incentivos al uso doméstico de energía limpia.", effect: +1 },
-        { text: "Mantener producción petrolera mientras se planea la transición.", effect: -1 },
-        { text: "Importar energía limpia en lugar de producirla localmente.", effect: 0 }
+        { text: "Invest in solar energy with cuts in other sectors.", effect: +2 },
+        { text: "Offer incentives for domestic use of clean energy.", effect: +1 },
+        { text: "Maintain oil production while planning the transition.", effect: -1 },
+        { text: "Import clean energy instead of producing it locally.", effect: 0 }
       ]
     },
     {
       year: 2033,
-      context: "El deshielo antártico alcanza niveles récord, sube el nivel del mar.",
-      warning: "Millones podrían verse desplazados antes de 2050 si no se frena.",
+      context: "Antarctic melting reaches record levels, sea level rises.",
+      warning: "Millions could be displaced before 2050 if not stopped.",
       options: [
-        { text: "Firmar tratado global urgente para reducir emisiones.", effect: +2 },
-        { text: "Financiar investigaciones para frenar el deshielo.", effect: +1 },
-        { text: "Construir barreras costeras en las ciudades más vulnerables.", effect: 0 },
-        { text: "Priorizar el crecimiento económico sobre el medio ambiente.", effect: -2 }
+        { text: "Sign urgent global treaty to reduce emissions.", effect: +2 },
+        { text: "Fund research to stop the melting.", effect: +1 },
+        { text: "Build coastal barriers in the most vulnerable cities.", effect: 0 },
+        { text: "Prioritize economic growth over the environment.", effect: -2 }
       ]
     },
     {
       year: 2034,
-      context: "El Ártico pierde casi todo su hielo estacional por primera vez.",
-      warning: "Esto altera las corrientes oceánicas y el clima global.",
+      context: "The Arctic loses almost all its seasonal ice for the first time.",
+      warning: "This alters ocean currents and the global climate.",
       options: [
-        { text: "Prohibir explotación petrolera en zonas árticas.", effect: +2 },
-        { text: "Invertir en tecnologías de enfriamiento atmosférico experimental.", effect: +1 },
-        { text: "Permitir nuevas rutas comerciales polares.", effect: -1 },
-        { text: "Autorizar extracción masiva de recursos aprovechando el deshielo.", effect: -2 }
+        { text: "Prohibit oil exploitation in Arctic zones.", effect: +2 },
+        { text: "Invest in experimental atmospheric cooling technologies.", effect: +1 },
+        { text: "Allow new polar commercial routes.", effect: -1 },
+        { text: "Authorize massive resource extraction leveraging the melting.", effect: -2 }
       ]
     },
     {
       year: 2035,
-      context: "El planeta alcanza su punto crítico. Eventos extremos son comunes.",
-      warning: "Las decisiones de hoy definirán el futuro habitable.",
+      context: "The planet reaches its critical point. Extreme events are common.",
+      warning: "Today's decisions will define a habitable future.",
       options: [
-        { text: "Firmar acuerdo mundial con sanciones reales.", effect: +2 },
-        { text: "Incentivar innovación sin compromisos.", effect: +1 },
-        { text: "Dejar que cada país actúe por su cuenta.", effect: 0 },
-        { text: "Aumentar producción industrial para financiar soluciones futuras.", effect: -2 }
+        { text: "Sign world agreement with real sanctions.", effect: +2 },
+        { text: "Incentivize innovation without rigid commitments.", effect: +1 },
+        { text: "Let each country act on its own.", effect: 0 },
+        { text: "Increase industrial production to fund future solutions.", effect: -2 }
       ]
     }
   ];
   
   // ---------------------------
-  // 2. Variables y Referencias DOM
+  // 2. Variables and DOM References
   // ---------------------------
   let currentIndex = 0;
   let planetScore = 50;
@@ -152,20 +152,20 @@ function init() {
   const planetContainer = document.getElementById('planet-container');
 
   // ---------------------------
-  // 3. Funciones de Puntuación y Barra de Vida
+  // 3. Score and Health Bar Functions
   // ---------------------------
 
-  /** Actualiza el puntaje y la barra de vida en la UI. */
+  /** Updates the score and health bar in the UI. */
   function updateScore() {
     scoreEl.textContent = planetScore;
     updateHealthBar();
   }
 
-  /** Modifica el color y el ancho de la barra de vida según el puntaje. */
+  /** Modifies the health bar's color and width based on the score. */
   function updateHealthBar() {
     healthBarFillEl.style.width = `${planetScore}%`;
     
-    // Limpia todas las clases de color antes de aplicar la nueva
+    // Clear all color classes before applying the new one
     healthBarFillEl.className = ''; 
 
     if (planetScore >= 80) healthBarFillEl.classList.add("health-green");
@@ -175,16 +175,16 @@ function init() {
     else healthBarFillEl.classList.add("health-red");
   }
 
-  updateScore(); // Llama al inicio para inicializar la barra de vida.
+  updateScore(); // Call at start to initialize the health bar.
 
   // ---------------------------
-  // 4. Lógica Principal del Juego
+  // 4. Main Game Logic
   // ---------------------------
 
-  /** Muestra el evento actual y sus opciones en la UI. */
+  /** Renders the current event and its options in the UI. */
   function renderEvent() {
     const event = events[currentIndex];
-    yearEl.textContent = `Ano ${event.year}`;
+    yearEl.textContent = `Year ${event.year}`;
     contextEl.textContent = event.context;
     warningEl.textContent = event.warning;
     choicesEl.innerHTML = "";
@@ -194,7 +194,7 @@ function init() {
     event.options.forEach((opt, i) => {
       const btn = document.createElement("div");
       btn.className = "choice";
-      // Añade letra de opción (a, b, c, d)
+      // Add option letter (a, b, c, d)
       btn.textContent = `${String.fromCharCode(97 + i)}) ${opt.text}`; 
       btn.dataset.effect = opt.effect;
       
@@ -203,16 +203,16 @@ function init() {
     });
   }
 
-  /** Maneja la selección de una opción. */
+  /** Handles the selection of an option. */
   function handleChoiceClick(e) {
     const btn = e.currentTarget;
     const effect = Number(btn.dataset.effect) * 5;
     
-    // Calcula el nuevo puntaje, asegurando que se mantenga entre 0 y 100
+    // Calculate the new score, ensuring it stays between 0 and 100
     planetScore = Math.max(0, Math.min(100, planetScore + effect));
     updateScore();
 
-    // Deshabilita todas las opciones y resalta la elegida
+    // Disable all options and highlight the chosen one
     Array.from(choicesEl.children).forEach(c => c.classList.add("disabled"));
     btn.classList.remove("disabled");
     btn.classList.add("selected");
@@ -220,46 +220,46 @@ function init() {
     nextBtn.classList.remove("hidden");
   }
 
-  /** Maneja el clic en el botón "Siguiente Ano". */
+  /** Handles the click on the "Next Year" button. */
   nextBtn.addEventListener("click", () => {
     currentIndex++;
     if (currentIndex < events.length) renderEvent();
     else endGame();
   });
 
-  /** Finaliza el juego y muestra el mensaje final. */
+  /** Ends the game and displays the final message. */
   function endGame() {
     nextBtn.classList.add("hidden");
-    yearEl.textContent = "Fin de la Simulación";
+    yearEl.textContent = "Simulation End";
     contextEl.textContent = "";
     warningEl.textContent = "";
 
     let message = "";
-    if (planetScore >= 80) message = "El planeta prospera. La humanidad actuó a tiempo.";
-    else if (planetScore >= 50) message = "El planeta sobrevive con dificultad, pero aun hay esperanza.";
-    else message = "El planeta colapsó. Las decisiones fueron insuficientes.";
+    if (planetScore >= 80) message = "The planet thrives. Humanity acted in time.";
+    else if (planetScore >= 50) message = "The planet survives with difficulty, but there is still hope.";
+    else message = "The planet collapsed. Decisions were insufficient.";
 
     finalEl.textContent = message;
     finalEl.classList.remove("hidden");
     choicesEl.innerHTML = "";
   }
   
-  renderEvent(); // Inicia el primer evento del juego
+  renderEvent(); // Start the first game event
 
   // ===========================================
-  // 5. THREE.JS: Inicialización y Animación
+  // 5. THREE.JS: Initialization and Animation
   // ===========================================
 
-  // Se asume que THREE está disponible globalmente
+  // Assume THREE is available globally
   const canvas = document.getElementById("earthCanvas");
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   
-  let earth; // Variable para la esfera de la Tierra
+  let earth; // Variable for the Earth sphere
 
-  /** Ajusta el tamaño del renderizador y la cámara al contenedor. */
+  /** Adjusts the renderer and camera size to the container. */
   function resizeRenderer() {
     const rect = canvas.parentElement.getBoundingClientRect();
     const w = Math.max(300, Math.floor(rect.width));
@@ -271,28 +271,28 @@ function init() {
 
   window.addEventListener('resize', resizeRenderer);
 
-  // Luces
-  const amb = new THREE.AmbientLight(0xffffff, 0.35); // Luz ambiental
+  // Lights
+  const amb = new THREE.AmbientLight(0xffffff, 0.35); // Ambient light
   scene.add(amb);
-  const dir = new THREE.DirectionalLight(0xffffff, 0.9); // Luz direccional (Sol)
+  const dir = new THREE.DirectionalLight(0xffffff, 0.9); // Directional light (Sun)
   dir.position.set(5, 3, 5);
   scene.add(dir);
 
-  /** Crea y configura el modelo 3D de la Tierra. */
+  /** Creates and configures the 3D Earth model. */
   function createEarth() {
       const sphereGeo = new THREE.SphereGeometry(2, 64, 64);
       const placeholderMat = new THREE.MeshStandardMaterial({ color: 0x003366 });
       earth = new THREE.Mesh(sphereGeo, placeholderMat);
       scene.add(earth);
       camera.position.z = 6;
-      resizeRenderer(); // Asegurar el tamaño inicial
+      resizeRenderer(); // Ensure initial size
   }
 
-  /** Carga texturas para el día y la noche. */
+  /** Loads day and night textures. */
   function loadTextures() {
       const loader = new THREE.TextureLoader();
       
-      // Textura del Día
+      // Day Texture
       loader.load(
           'assets/earth_texture.jpg',
           (texture) => {
@@ -301,10 +301,10 @@ function init() {
               earth.material.needsUpdate = true;
           },
           undefined,
-          () => console.warn('No se pudo cargar la textura del día. Usando color sólido.')
+          () => console.warn('Could not load day texture. Using solid color.')
       );
 
-      // Textura Nocturna (Luces de la Ciudad)
+      // Night Texture (City Lights)
       loader.load(
           'assets/night_lights.jpg', 
           (texture) => {
@@ -318,7 +318,7 @@ function init() {
               earth.material.needsUpdate = true;
           },
           undefined,
-          (err) => console.warn('No se pudo cargar la textura nocturna.', err)
+          (err) => console.warn('Could not load night texture.', err)
       );
   }
 
@@ -326,32 +326,32 @@ function init() {
   loadTextures();
 
   // ---------------------------
-  // 6. Lógica de Día / Noche
+  // 6. Day / Night Logic
   // ---------------------------
   
-  let dayProgress = 1; // 1 = Día, 0 = Noche
-  const dayNightDuration = 60 * 1000; // 60 segundos por ciclo completo
+  let dayProgress = 1; // 1 = Day, 0 = Night
+  const dayNightDuration = 60 * 1000; // 60 seconds per full cycle
   let lastTime = Date.now();
-  let dayToNight = true; // Indica si estamos yendo de día a noche
+  let dayToNight = true; // Indicates if we are transitioning from day to night
 
-  /** Lógica para transicionar suavemente entre el modo Día y Noche. */
+  /** Logic for smoothly transitioning between Day and Night mode. */
   function updateDayNight() {
     const now = Date.now();
     const delta = now - lastTime;
     lastTime = now;
 
     const step = delta / dayNightDuration;
-    // Incrementa o decrementa el progreso
+    // Increment or decrement progress
     dayProgress += dayToNight ? -step : step;
 
-    // Cambia la dirección al llegar a los límites
+    // Change direction when reaching limits
     if (dayProgress <= 0) { dayProgress = 0; dayToNight = false; }
     else if (dayProgress >= 1) { dayProgress = 1; dayToNight = true; }
 
-    // Interpola el color del fondo (CSS)
+    // Interpolate background color (CSS)
     const p = dayProgress;
     
-    // Colores usados en el background CSS
+    // Colors used in the CSS background
     const colorDayTop = { r: 77, g: 184, b: 255 };
     const colorDayBottom = { r: 0, g: 51, b: 77 };
     const colorNightTop = { r: 0, g: 17, b: 31 };
@@ -373,33 +373,33 @@ function init() {
 
     planetContainer.style.background = `radial-gradient(circle at top, #${hexTop} 0%, #${hexBottom} 60%)`;
     
-    // Interpola la intensidad de las luces (Three.js)
+    // Interpolate light intensity (Three.js)
     amb.intensity = 0.05 + 0.3 * p;
     dir.intensity = 0.2 + 0.7 * p;
 
-    // Controla la intensidad de las luces de la ciudad
+    // Control the city light intensity
     if (nightTexture) {
-      earth.material.emissiveIntensity = (1 - p) * 5; // Más fuerte en la noche (p=0)
+      earth.material.emissiveIntensity = (1 - p) * 5; // Stronger at night (p=0)
     }
   }
   
   // ---------------------------
-  // 7. Loop de Animación
+  // 7. Animation Loop
   // ---------------------------
 
-  /** Loop principal de renderizado y animación. */
+  /** Main rendering and animation loop. */
   function animate() {
     requestAnimationFrame(animate);
     
-    // Rotación constante de la Tierra
+    // Constant Earth rotation
     earth.rotation.y += 0.0018; 
     
-    // Pequeña oscilación para dar dinamismo
+    // Slight oscillation for dynamism
     earth.rotation.x = 0.02 * Math.sin(Date.now() * 0.0005); 
 
-    updateDayNight(); // Actualiza la transición día/noche
+    updateDayNight(); // Update day/night transition
     renderer.render(scene, camera);
   }
 
-  animate(); // Inicia el loop de animación
+  animate(); // Start the animation loop
 }
