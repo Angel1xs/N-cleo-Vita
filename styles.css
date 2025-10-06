@@ -1,13 +1,13 @@
 /*
- * Archivo: styles.css
- * Descripción: Estilos para los componentes principales del juego.
+ * File: styles.css
+ * Description: Styles for the main game components and layout.
  */
 
 /* ==================================== */
-/* === PANTALLAS DE INTRO Y CONTEXTO === */
+/* === INTRO AND CONTEXT SCREENS === */
 /* ==================================== */
 
-/* Estilo Base para pantallas completas (Intro y Contexto) */
+/* Base Style for full-screen overlays (Intro, Context, Timeline) */
 .full-screen-overlay {
   position: fixed;
   top: 0;
@@ -22,15 +22,19 @@
   font-family: sans-serif;
   text-align: center;
   z-index: 10;
+  padding: 20px;
+  overflow-y: auto;
 }
 
 #intro-screen {
+  /* Bright blue gradient for intro */
   background: radial-gradient(circle at top, #4db8ff 0%, #00334d 100%);
 }
 
-/* Aseguramos que la regla display: flex; sea anulada cuando se añade la clase hidden */
+/* Ensure the display: flex; rule is overridden when the hidden class is added */
 #intro-screen.hidden,
-#context-screen.hidden { 
+#context-screen.hidden,
+#timeline-screen.hidden {
     display: none; 
 }
 
@@ -45,13 +49,15 @@
   line-height: 1.5;
 }
 
-#context-screen {
+/* Styles for Context and Timeline Screens (Darker Blue/Black Gradient) */
+#context-screen, #timeline-screen {
   background: radial-gradient(circle at top, #00334d 0%, #000 100%);
 }
 
-#context-screen h2 {
+#context-screen h2, #timeline-screen h2 {
   font-size: 2rem;
   margin-bottom: 15px;
+  color: #8cd9ff; /* Consistent accent color for headings */
 }
 
 #context-screen p {
@@ -60,9 +66,37 @@
   line-height: 1.5;
 }
 
+/* Specific Styles for the Timeline */
+#timeline-screen {
+  justify-content: flex-start;
+  padding-top: 5vh;
+}
+
+#timeline-content {
+    max-width: 700px;
+    margin: 20px auto;
+    text-align: left;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05); /* Slightly transparent white/light color */
+    border-radius: 10px;
+    border: 1px solid rgba(0, 179, 255, 0.1); /* Subtle border using accent color */
+}
+
+#timeline-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+#timeline-content p:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
 
 /* =========================== */
-/* === CONTENIDO PRINCIPAL === */
+/* === MAIN CONTENT === */
 /* =========================== */
 
 #game {
@@ -92,7 +126,7 @@
 }
 
 /* ================== */
-/* === PLANETA / SCORE === */
+/* === PLANET / SCORE === */
 /* ================== */
 
 #planet-container {
@@ -102,12 +136,11 @@
   margin: 8px 0 24px 0;
   border-radius: 12px;
   overflow: hidden;
-  /* Estilo base, será sobrescrito por .day o .night */
   background: linear-gradient(180deg, rgba(0,20,40,0.4), rgba(0,0,0,0.6));
   box-shadow: 0 8px 30px rgba(0,0,0,0.6);
 }
 
-/* Modos Día/Noche */
+/* Day/Night Modes */
 #planet-container.day {
   background: radial-gradient(circle at top, #4db8ff 0%, #00334d 60%);
   transition: background 0.8s ease-in-out, filter 0.8s ease-in-out;
@@ -139,7 +172,7 @@
 }
 
 /* ==================== */
-/* === BARRA DE VIDA === */
+/* === HEALTH BAR === */
 /* ==================== */
 
 #health-bar-container {
@@ -160,7 +193,7 @@
     transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
 }
 
-/* Colores */
+/* Colors (defined in vars.css but included here for full context if needed) */
 .health-green { background-color: var(--health-green); }
 .health-light-green { background-color: var(--health-light-green); }
 .health-yellow { background-color: var(--health-yellow); }
@@ -169,7 +202,7 @@
 
 
 /* ====================== */
-/* === OPCIONES / UI === */
+/* === CHOICES / UI === */
 /* ====================== */
 
 #choices {
@@ -216,7 +249,7 @@ button {
   transition: background 0.3s;
 }
 
-/* Estilo para botón de inicio en pantalla de intro */
+/* Style for the start button on the intro screen */
 #intro-screen button {
     margin-top: 20px;
     padding: 10px 25px;
