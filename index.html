@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Futuro de la Tierra</title>
+    <title>Future of the Earth</title>
     
     <link rel="stylesheet" href="vars.css" />
     <link rel="stylesheet" href="styles.css" />
@@ -12,27 +12,47 @@
 <body>
 
     <div id="intro-screen" class="full-screen-overlay">
-      <h1>Futuro de la Tierra</h1>
-      <p>Bienvenido a la simulación. Tus decisiones afectarán el futuro del planeta.<br>
-      Presiona ENTER para continuar.</p>
-      <button id="startButton">Comenzar Simulación</button>
+      <h1>Future of the Earth</h1>
+      <p>Welcome to the simulation. Your decisions will affect the planet's future.<br>
+      Press **ENTER** to continue.</p>
+      <button id="startButton">Start Simulation</button>
     </div>
 
     <div id="context-screen" class="full-screen-overlay hidden">
-      <h2>Contexto del Juego</h2>
+      <h2>Mission: Terra Satellite</h2>
       <p>
-        El mundo enfrenta desafíos sin precedentes: cambio climático, pérdida de biodiversidad, escasez de agua y energía.
-        Tus decisiones influirán directamente en la salud del planeta y la supervivencia de millones.
+        For 25 years, the Terra satellite orbited the Earth, observing every change: fires, 
+        droughts, disappearing glaciers, and air pollution. 
+        Its instruments collected millions of data points that now serve as a global 
+        decision-making tool. 
+        Since its launch in 1999, it has helped us understand how humans transform the world.
       </p>
-      <p>(Presiona ENTER para comenzar a jugar)</p>
+      <p>(Press **ENTER** to continue)</p>
+    </div>
+    
+    <div id="timeline-screen" class="full-screen-overlay hidden">
+        <h2>Timeline: 25 Years that Changed the Planet</h2>
+        <div id="timeline-content">
+            <p><strong>1999</strong> – Hurricane "Mitch" (Central America). The storm devastated Honduras and Nicaragua. Terra began its mission observing a planet wounded by extreme events.</p>
+            <p><strong>2004</strong> – Fires in Argentina. Fire ravaged the Chaco. MODIS recorded the first major regional hotspots.</p>
+            <p><strong>2005</strong> – Hurricane "Katrina" (US & Caribbean). One of the most destructive hurricanes of the century, it showed the hemisphere's vulnerability to intense weather events.</p>
+            <p><strong>2010</strong> – Oil Spill in the Gulf of Mexico. ASTER and MOPITT detected the spread of pollution. It became one of the biggest modern ecological crises.</p>
+            <p><strong>2015</strong> – Heatwaves in Mexico. Record temperatures tested electrical systems and public health. ASTER registered the thermal increase in major cities.</p>
+            <p><strong>2017</strong> – Giant Snake Sighting in the Amazon. Monitoring revealed high biodiversity in protected areas, reinforcing the importance of conservation.</p>
+            <p><strong>2019</strong> – Reforestation Project in Pachaj, Guatemala. Local communities led forest restoration, showing that positive change can also be measured from space.</p>
+            <p><strong>2020</strong> – COVID-19 Pandemic. Global emissions dropped for the first time in decades. Terra registered cleaner skies and a brief respite for Earth.</p>
+            <p><strong>2023</strong> – Fires in South America. Brazil, Bolivia, and others faced massive fires. MODIS and MOPITT recorded record levels of pollution.</p>
+            <p><strong>2025</strong> – International Year of Glacier Conservation. The world unites to protect icy ecosystems, while ASTER analyzes.</p>
+        </div>
+        <p>(Press **ENTER** to start making decisions)</p>
     </div>
 
     <div class="container hidden" id="main-content">
-      <h1>Futuro de la Tierra</h1>
+      <h1>Future of the Earth</h1>
 
       <div id="planet-container">
         <canvas id="earthCanvas"></canvas>
-        <div id="score">Puntaje del Planeta: <span id="planetScore">100</span></div>
+        <div id="score">Planet Score: <span id="planetScore">100</span></div>
       </div>
 
       <div id="health-bar-container">
@@ -44,7 +64,7 @@
         <p id="context"></p>
         <p id="warning"></p>
         <div id="choices"></div>
-        <button id="next" class="hidden">Siguiente Año</button>
+        <button id="next" class="hidden">Next Year</button>
         <div id="final" class="hidden"></div>
       </div>
     </div>
@@ -54,48 +74,47 @@
 
     <script>
       /**
-       * Módulo de control de inicio de fases (Intro -> Contexto -> Juego)
+       * Phase control module (Intro -> Context -> Timeline -> Game)
        */
       window.addEventListener("DOMContentLoaded", () => {
-        // Referencias a las pantallas
+        // Screen References
         const intro = document.getElementById("intro-screen");
         const contextScreen = document.getElementById("context-screen");
+        const timelineScreen = document.getElementById("timeline-screen");
         const mainContent = document.getElementById("main-content");
         const startButton = document.getElementById("startButton");
 
         /**
-         * Inicia el juego principal, llama a las funciones de inicialización
-         * del script.js y quita los listeners de inicio.
+         * Starts the main game, calls initialization functions, and removes listeners.
          */
         function startGame() {
           mainContent.classList.remove("hidden");
-          
-          // Llama a la función de inicialización del juego 
           if (typeof init === "function") init();
-          
-          // Quitar listeners una vez que el juego inicia
           window.removeEventListener("keydown", handleEnter);
           startButton.removeEventListener("click", advancePhase);
         }
 
         /**
-         * Avanza la simulación a la siguiente fase (Intro -> Contexto o Contexto -> Juego).
+         * Advances the simulation to the next phase.
          */
         function advancePhase() {
             if (!intro.classList.contains("hidden")) {
-                // FASE 1: Oculta intro y muestra contexto
+                // PHASE 1 (Intro) -> PHASE 2 (Context)
                 intro.classList.add("hidden");
                 contextScreen.classList.remove("hidden");
             } else if (!contextScreen.classList.contains("hidden")) {
-                // FASE 2: Oculta contexto y muestra juego
+                // PHASE 2 (Context) -> PHASE 3 (Timeline)
                 contextScreen.classList.add("hidden");
+                timelineScreen.classList.remove("hidden");
+            } else if (!timelineScreen.classList.contains("hidden")) {
+                // PHASE 3 (Timeline) -> PHASE 4 (Game)
+                timelineScreen.classList.add("hidden");
                 startGame();
             }
         }
 
         /**
-         * Maneja el evento de presionar la tecla Enter.
-         * @param {KeyboardEvent} event 
+         * Handles the Enter key press event.
          */
         function handleEnter(event) {
           if (event.key === "Enter") {
@@ -103,7 +122,7 @@
           }
         }
         
-        // Asignar listeners
+        // Assign listeners
         window.addEventListener("keydown", handleEnter);
         startButton.addEventListener("click", advancePhase);
       });
